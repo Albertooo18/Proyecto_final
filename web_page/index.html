@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">-->
+    <!--<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">-->
+    <title>Bananas y manzanas</title>
+
+    <link rel="stylesheet" href="css/Banana-apple.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    
+    
+   
+
+  </head>
+  <body style="min-height: 2000px; padding-top:56px;">    
+
+    <div class="container-fluid">       
+
+        <header>
+            <div class="row mt-2 d-flex justify-content-around">
+                <div class="col-12 d-flex justify-content-center">
+                    <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
+                    <lord-icon
+                        src="https://cdn.lordicon.com/kkjbupgp.json"
+                        trigger="hover"
+                        colors="primary:#e83a30,secondary:#e8e230"
+                        style="width:250px;height:250px">
+                    </lord-icon>
+                </div>
+                
+                <div class="col-12 d-flex justify-content-center">
+                    <h1 class="display-5 fw-bold">Clasificacion de imagenes</h1>
+                </div>                
+
+                <div class="col-12 d-flex justify-content-center">
+                    <p class="lead text-center">Clasificacion de imágenes (Bananas o manzanas) usando la camara web utilizando Tensorflow.js</p>
+                <div>
+                
+                <div class="b-example-divider"></div>
+            </div>
+        </header>        
+
+        <main>
+            <div class="row mt-2 text-center border-bottom d-flex justify-content-center">    
+                
+                <div class="col-11">               
+                    <div class="alert alert-warning mt-3 alert-dismissible fade show" role="alert">
+                        <h2>Puede que no funcione</h2>
+                        <hr>
+                        <h4><strong>Aviso</strong> Ya que el modelo esta hecho con keras, esta es una tecnologia que necesita https para funcionar</h4>
+                        <a href="#"  class="alert-link">mas informacion al final de la pagina</a>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row text-center border-bottom mt-2 ">
+
+                <div class="col-4 offset-md-4 text-center d-flex justify-content-center">
+                    <video id="video" playsinline autoplay style="width: 1px;"></video>                    
+                    <canvas class="d-flex justify-content-center canvas2" id="canvas"  width="400" height="400" style="max-width: 100%;"></canvas>
+                    <!--  -->
+                    <canvas id="othercanvas" width="150" height="150" style="display: none"></canvas>                    
+                    <div id="resultado"></div>
+                </div>
+                
+                <div class="col-12 mt-2">
+                    <button class="btn btn-primary mb-2" id="cambiar-camara" onclick="cambiarCamara();">Cambiar camara</button>
+                </div>
+            </div>
+        </main>  
+        
+        <section>
+            <div class="row mt-2 d-flex justify-content-around aumento mb-2">
+
+                <div class="col-12 text-center mt-5">
+                    <h2  class="h1 text-center fw-bold">Entrenamiento</h2> 
+                </div>
+
+                <div id="librerias" class="col-12 d-flex justify-content-center my-5">
+                    <h2>Impotacion de librerias</h2>
+                </div> 
+                
+                <div class="col-sm-11 col-lg-5 aumento bg-dark mx-2 px-5 pt-5 pb-5 borde">
+
+                    <div class="text-left text-light mb-2">
+                        <span class="morado">import </span>tensorflow <span class="morado">as </span>tf
+                    </div>
+                    <div class="text-left text-light mb-2">
+                        <span class="morado">from </span>tensorflow.keras.preprocessing.image <span class="morado">import </span>ImageDataGenerator
+                    </div>
+                    <div class="text-left text-light mb-2">
+                        <span class="morado">import</span> os
+                    </div>
+                    <div class="text-left text-light mb-2">
+                        <span class="morado">import</span> numpy as np
+                    </div>
+                    <div class="text-left text-light mb-2">
+                        <span class="morado">import</span> matplotlib.pyplot as plt
+                    </div>
+                                        
+                </div> 
+
+                <div class="col-12 col-md-6 d-flex justify-content-center align-items-center">
+                        
+                    <img class="d-block mx-auto mb-2 python-img" src="img/python.png" alt="aumento de datos" width="550" height="250">
+                        
+                </div> 
+            </div>
+        </section>
+
+        <section>
+            <div id="importacion" class="row mt-2 d-flex justify-content-around importacion">             
+                              
+                <div class="col-12 d-flex justify-content-center my-5">
+                    <h2>Importacion de datos</h2> 
+                </div>
+
+                <div class="col-sm-11 col-xl-5 importacion bg-dark mx-2 px-5 pt-5 pb-5 borde"><span>
+                    <div class="text-left text-light ">
+                        carp_entren_apple = os.path.join(<span class="naranja">'/content/carpeta_entrenamiento/apple_1.1'</span>)      # imagenes de manzanas para pruebas
+                    </div>
+                    <div class="text-left text-light ">
+                        carpeta_entren_banana = os.path.join(<span class="naranja">'/content/carpeta_entrenamiento/banana_1.1'</span>)  # imagenes de bananas para pruebas
+                    </div>
+                    <div class="text-left text-light ">
+                        carpeta_val_apple = os.path.join(<span class="naranja">'/content/carpeta_validacion/apple_1.1'</span>)      # imagenes de manzanas para validacion
+                    </div>
+                    <div class="text-left text-light ">
+                        carpeta_val_banana = os.path.join(<span class="naranja">'/content/carpeta_validacion/banana_1.1'</span>)     # imagenes de bananas para validacion
+                    </div> 
+                </div>
+
+                <div class="col-12 col-xl-6 d-flex justify-content-around align-items-center mt-2">
+         
+                    <img class="d-block mb-2 me-2 f-img" src="img/1.jpg" alt="apple" width="175" height="175">
+
+         
+                    <img class="d-block mb-2 me-2 f-img" src="img/2.jpg" alt="apple" width="175" height="175">
+        
+                     
+                    <img class="d-block mb-2 me-2 f-img" src="img/3.png" alt="banana_1" width="175" height="175">
+                    
+         
+                    <img class="d-block mb-2 me-2 f-img" src="img/4.png" alt="banana" width="175" height="175">
+
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div id="aumento" class="row mt-2 d-flex justify-content-around aumento mb-2">
+                <div class="col-12 d-flex justify-content-center my-5">
+                    <h2>Aumento de datos</h2>
+                </div> 
+                
+                <div class="col-sm-11 col-xl-5 aumento bg-dark mx-2 px-5 pt-5 pb-5 borde">
+
+                    <div class="text-left text-light mb-2">
+                        image_gen_entrenamiento = ImageDataGenerator(
+                    </div>
+                    <div class="text-left text-light mb-2">
+                        rescale=<span class="verde">1</span>.<span class="verde">/255,</span>
+                    </div>
+                    <div class="text-left text-light mb-2">
+                        rotation_range=<span class="verde">40,</span>
+                    </div>
+                    <div class="text-left text-light mb-2">
+                        width_shift_range=<span class="verde">0.2,</span>
+                    </div>
+                    <div class="text-left text-light mb-2">
+                        height_shift_range=<span class="verde">0.2,</span>
+                    </div>
+                    <div class="text-left text-light mb-2">
+                        shear_range=<span class="verde">0.2,</span>
+                    </div>
+                    <div class="text-left text-light mb-2">
+                        zoom_range=<span class="verde">0.2</span>
+                    </div>
+                    <div class="text-left text-light mb-2">
+                        horizontal_flip=<span class="azul">True</span>,
+                    </div>
+                    <div class="text-left text-light">
+                        fill_mode=<span class="naranja">'nearest'</span>)
+                    </div>
+
+                </div> 
+
+                <div class="col-12 col-xl-6 d-flex justify-content-center align-items-center">
+                        
+                    <img class="d-block mx-auto mb-2 data-plus" src="img/data_plus.png" alt="aumento de datos" width="950" height="340">
+                        
+                </div> 
+            </div>
+        </section>
+
+        <section>
+            <div id="generacion" class="row mt-2 d-flex justify-content-around aumento mb-2">
+                <div class="col-12 d-flex justify-content-center my-5 mb-5">
+                    <h2>Generacion</h2>
+                </div>
+                
+                <div class="col-sm-11 col-xl-5 aumento bg-dark mx-2 mb-2 px-5 pt-5 pb-5 borde">           
+
+                    <div class="text-left text-light mb-2">
+                        data_gen_entrenamiento = image_gen_entrenamiento.flow_from_directory(batch_size=TAMANO_LOTE,
+                    </div>
+                    <div class="text-left text-light mb-2">
+                        directory=carpeta_entrenamiento,
+                    </div>
+                    <div class="text-left text-light mb-2">
+                        shuffle=<span></span>True,
+                    </div>
+                    <div class="text-left text-light mb-2">
+                        target_size=(TAMANO_IMG,TAMANO_IMG),
+                    </div>
+                    <div class="text-left text-light mb-5">
+                        class_mode=<span></span>'binary')
+                    </div>
+                    <div class="text-left text-light mb-5">
+                        image_gen_val = ImageDataGenerator(rescale=<span class="verde">1</span>.<span class="verde">/255</span>)
+                    </div>
+                    <div class="text-left text-light mb-2">
+                        data_gen_validacion = image_gen_val.flow_from_directory(batch_size=TAMANO_LOTE,
+                    </div>
+                    <div class="text-left text-light mb-2">
+                        directory=carpeta_validacion,
+                    </div>
+                    <div class="text-left text-light mb-2">
+                        target_size=(TAMANO_IMG, TAMANO_IMG),
+                    </div>
+                    <div class="text-left text-light mb-2">
+                        class_mode=<span></span>'binary')
+                    </div>  
+                                            
+                </div> 
+
+                <div class="col-12 col-xl-6 d-flex justify-content-center align-items-center ">
+                        
+                    <img class="d-block mx-auto mb-2 data2-plus" src="img/data2_plus.png" alt="aumento de datos" width="980" height="380">
+                        
+                </div>
+                
+            </div>
+        </section>
+
+        <section>
+            <div id="modelo" class="row mb-2 d-flex justify-content-around">
+                <div class="col-12 d-flex justify-content-center my-5 mb-5">
+                    <h2>Modelo</h2>
+                </div> 
+                
+                <div class="col-sm-11 col-xl-5 aumento bg-dark mx-2 mb-2 px-5 pt-5 pb-5 borde">           
+
+                    <div class="text-left text-light mb-2">
+                        modelo = tf.keras.models.Sequential([
+                    </div>
+                    <div class="text-left text-light mb-2">
+                        tf.keras.layers.Conv2D(<span class="verde">32</span>, (<span class="verde">3</span>,<span class="verde">3</span>), activation=<span class="naranja">'relu'</span>, input_shape=(<span class="verde">150</span>,<span class="verde">150</span>,<span class="verde">3</span>)),
+                    </div>
+                    <div class="text-left text-light mb-5">
+                        tf.keras.layers.MaxPooling2D(<span class="verde">2</span>, <span class="verde">2</span>),
+                    </div>
+                    <div class="text-left text-light mb-2">
+                        tf.keras.layers.Conv2D(<span class="verde">64</span>, (<span class="verde">3</span>,<span class="verde">3</span>), activation=<span class="naranja">'relu'</span>),
+                    </div>
+                    <div class="text-left text-light mb-5">
+                        tf.keras.layers.MaxPooling2D(<span class="verde">2</span>,<span class="verde">2</span>),
+                    </div>                    
+                    <div class="text-left text-light mb-2">
+                        tf.keras.layers.Conv2D(<span class="verde">128</span>, (<span class="verde">3</span>,<span class="verde">3</span>), activation=<span class="naranja">'relu'</span>),
+                    </div>
+                    <div class="text-left text-light mb-5">
+                        tf.keras.layers.MaxPooling2D(<span class="verde">2</span>,<span class="verde">2</span>),
+                    </div>
+                    <div class="text-left text-light mb-2">
+                        tf.keras.layers.Conv2D(<span class="verde">128</span>, (<span class="verde">3</span>,<span class="verde">3</span>), activation=<span class="naranja">'relu'</span>),
+                    </div>
+                    <div class="text-left text-light mb-5">
+                        tf.keras.layers.MaxPooling2D(<span class="verde"></span>2,<span class="verde"></span>2),
+                    </div>  
+                    <div class="text-left text-light mb-2">
+                        tf.keras.layers.Dropout(<span class="verde">0</span>.<span class="verde">5</span>),
+                    </div>
+                    <div class="text-left text-light mb-5">
+                        tf.keras.layers.Flatten(),
+                    </div>
+                    <div class="text-left text-light mb-2">
+                        tf.keras.layers.Dense(<span class="verde">512</span>, activation=<span class="naranja"></span>'relu'),
+                    </div>
+                    <div class="text-left text-light mb-2">
+                        tf.keras.layers.Dense(<span class="verde">2</span>) ])
+                    </div>                                            
+                                            
+                </div> 
+
+                <div class="col-12 col-xl-6 d-flex justify-content-center align-items-center ">
+                        
+                    <img class="d-block mx-auto mb-2 model-img model-jpg" src="img/model.jpg" alt="modelo" width="900" height="400">
+                        
+                </div>
+                
+            </div>
+        </section>
+
+        <section>
+            <div id="compilacion" class="row mb-2 d-flex justify-content-around">
+                <div class="col-12 d-flex justify-content-center my-5 mb-5">
+                    <h2>Compilacion & Entrenamiento</h2>
+                </div> 
+                
+                <div class="col-sm-11 col-xl-6 aumento bg-dark mx-2 mb-2 px-5 pt-5 pb-5 borde">
+
+                    <div class="text-left text-light mb-2">
+                        modelo.<span class="amarillo">compile</span>(optimizer=<span class="naranja">'adam'</span>,
+                    </div>
+                    <div class="text-left text-light mb-2">
+                        loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+                    </div>
+                    <div class="text-left text-light mb-2">
+                        metrics=[<span class="naranja">'accuracy'</span>])
+                    </div> 
+
+                </div>
+
+                <div class="col-sm-11 col-xl-5 aumento bg-dark mx-2 mb-2 px-5 pt-5 pb-5 borde">
+
+                    <div class="text-left text-light mb-2">
+                        epocas=<span class="verde">60</span>
+                    </div>
+                    <div class="text-left text-light mb-2">
+                        history = modelo.fit_generator(
+                    </div>
+                    <div class="text-left text-light mb-2">
+                        data_gen_entrenamiento,
+                    </div>  
+                    <div class="text-left text-light mb-2">
+                        steps_per_epoch=<span class="turquesa">int</span>(np.ceil(total_entrenamiento / <span class="turquesa">float</span>(TAMANO_LOTE))),
+                    </div>
+                    <div class="text-left text-light mb-2">
+                        epochs=epocas,
+                    </div>
+                    <div class="text-left text-light mb-2">
+                        validation_data=data_gen_validacion,
+                    </div>
+                    <div class="text-left text-light mb-2">
+                        validation_steps=<span class="turquesa">int</span>(np.ceil(total_val / <span class="turquesa">float</span>(TAMANO_LOTE))) )
+                    </div> 
+
+                </div> 
+            </div>
+        </section>         
+
+        <section>
+            <div class="row mb-2 d-flex justify-content-around">
+                <div class="col-12 d-flex justify-content-center my-5 mb-5">
+                    <h2 id="server">Ejemplo de como hacer un servidor https</h2>
+                </div>                    
+                
+                <div class="col-12">
+                    <ul class="list-group ms-5 h4">
+                        <li class="mb-4">Descarga Python en tu computadora (ya viene incluido en los archivos)</li>
+                        <li class="mb-4">Abre una línea de comandos o terminal</li>
+                        <li class="mb-4">Navega hasta la carpeta donde descargaste todos los archivos</li>
+                        <li class="mb-4">Ejecuta el comando python <strong>-m http.server 8000</strong></li>
+                        <li class="mb-4">Abre un explorador y ve a http://localhost:8000</li>
+                    </ul>
+                </div> 
+
+            </div>
+        </section>
+
+        <footer>
+            <div class="row bg-dark text-secondary text-center">
+                <div class="col-12">
+                    <h1 class="display-5 fw-bold text-white">Samsung innovation campus</h1>
+                </div>
+            </div>
+        </footer>                            
+                               
+    </div>
+
+    <script src="js/Banana-apple.js"></script>  <!----> 
+      
+    <script src="js/jquery-1.12.3.min.js"></script>
+
+	<script src="js/efectos.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>  
+
+    
+    
+    
+     
+
+    
+     
+    
+  </body>
+</html>
