@@ -1,0 +1,163 @@
+.body {
+  background: #fff;
+  font-size: 10px;  
+}
+
+
+.canvas-container {
+  margin: 0 auto;
+  border: 1px solid #ccc;
+}
+
+.importacion {
+  font-size: 1em;
+}
+
+.borde {
+  border-radius: 10px;
+}
+
+.aumento {
+  font-size: 1em;
+}
+
+.aumento-2 {
+  width: 844px;
+}
+
+.mb-4 {
+  margin-bottom: 4px;
+}
+
+#resultado {
+  font-weight:  bold;
+  font-size:  6rem;
+  text-align: center;
+}
+
+.morado {
+  color: #BF00FF;
+}
+
+.naranja {
+  color: #FFBF00;
+}
+
+.amarillo {
+  color: #FFFF00;
+}
+
+.verde {
+  color: #40FF00;
+}
+
+.azul {
+  color: #0000FF;
+}
+
+.turquesa{
+  color: #2EFEC8;
+}
+
+
+@media screen and (max-width: 1200px) {
+  
+  .python-img {
+    width: 400px;
+    height: auto;
+  }
+  .model-jpg {
+    width: 400px;
+    height: auto;
+  }
+
+  .f-img {
+    width: 120px;
+    height: auto;
+  }
+
+  .data-plus {
+    width: 600px;
+    height: auto;
+  }
+
+  .data2-plus {
+    width: 600px;
+    height: auto;
+  }
+
+  .model-img {
+    width: 600px;
+    height: auto;
+  }
+
+  }
+
+  @media screen and (max-width: 768px) {
+
+    .python-img {
+      width: 400px;
+      height: auto;
+    }
+    .model-jpg {
+      width: 500px;
+      height: auto;
+    }
+
+    .f-img {
+      width: 150px;
+      height: auto;
+    }
+
+    .data-plus {
+      width: 700px;
+      height: auto;
+    }
+
+    .data2-plus {
+      width: 700px;
+      height: auto;
+    }
+
+    .model-img {
+      width: 700px;
+      height: auto;
+    }
+
+    
+
+    
+  }
+
+  @media screen and (max-width: 576px) {
+
+    .python-img {
+      width: 500px;
+      height: auto;
+    }
+    .model-jpg {
+      width: 500px;
+      height: auto;
+    }
+
+    .f-img {
+      width: 80px;
+      height: auto;
+    }
+
+    .data-plus {
+      width: 500px;
+      height: auto;
+    }
+
+    .data2-plus {
+      width: 500px;
+      height: auto;
+    }
+
+    .model-img {
+      width: 500px;
+      height: auto;
+    }
+
+  }
