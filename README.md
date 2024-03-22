@@ -1,12 +1,12 @@
 # Proyecto_final
 Proyecto final de machine learning
 
-En este link de una carpeta de drive, estan todos losa archivos, ademas del modelo, y el documento word tambien
+En este link de una carpeta de drive, estan todos los a archivos, ademas del modelo, y el documento word tambien
 https://drive.google.com/drive/folders/1oWxu3cYKvON1P15UP1i2AXPbkVrUbhDL?usp=sharing
 
 ----------------------------------------------------------------------------------------------
 
-Clasificacion de imagenes (bananas y manzanas)
+Clasificacion de imagenes
 
 ---------------------------------------------------------------------------------
 
